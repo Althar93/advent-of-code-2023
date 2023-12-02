@@ -1,11 +1,9 @@
 module Day2 (day2Solver) where
 
 import Parser
-import Data.Maybe
 
 import Data.Char (isAlphaNum)
 import Data.List (sum)
-import Data.Text (pack, unpack, replace)
 
 -- The test input file path for part one
 testInputFile :: FilePath
@@ -74,5 +72,4 @@ solvePart2 xs = sum powers where
 day2Solver :: IO [Int]
 day2Solver = do
     input <- readInputs
-    putStrLn $ show input
     return [solvePart1 input, solvePart2 input]
