@@ -83,7 +83,6 @@ reduceWinningPairs ws = map (reduceWinningPairs' ws) ws where
     reduceWinningPairs' ws [] = 1
     reduceWinningPairs' ws xs = 1 + (sum $ map (\i -> reduceWinningPairs' ws (ws !! (i - 1))) xs) 
 
-
 -- Builds a list of winning cards for ONE card
 buildWinningPairs :: [Card] -> Card -> [Int]
 buildWinningPairs xs x = case winningCards xs x of
@@ -93,7 +92,6 @@ buildWinningPairs xs x = case winningCards xs x of
 -- Builds a list of winning cards for each card
 winningPairs :: [Card] -> [[Int]]
 winningPairs xs = map (buildWinningPairs xs) xs
-
 
 -- The solver for part #2 of the puzzle
 solvePart2 :: [Card] -> Int
