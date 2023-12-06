@@ -1,8 +1,6 @@
 module Day6 (day6Solver) where
 
 import Parser
-import Data.Char (isAlphaNum)
-import Data.List (sum, find)
 
 -- The test input file path for part one
 testInputFile :: FilePath
