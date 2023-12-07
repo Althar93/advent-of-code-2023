@@ -68,8 +68,8 @@ handType' h0 h   | length sets == 1 = FiveKind h
         sets = sortHand h0
 
 -- Returns the hand type of a given hand 
-handType :: Hand -> HandType
-handType h = handType' h h 
+handTypeSimple :: Hand -> HandType
+handTypeSimple h = handType' h h 
 
 -- Returns the hand type of a given hand accounting for jokers
 handTypeJoker :: Hand -> HandType
@@ -88,16 +88,6 @@ sortHand (xs, _) = groupSort xs
 groupSort :: Ord a => [a] -> [[a]]
 groupSort xs = sortBy (comparing length) (group $ sort xs)
 
--- Promotes a hand type
-promoteHandType :: Int -> HandType -> HandType
-promoteHandType 0 ht = ht
-promoteHandType n ht = case ht of
-                         OnePair h   -> promoteHandType (n - 1) (TwoPair h)
-                         TwoPair h   -> promoteHandType (n - 1) (ThreeKind h)
-                         ThreeKind h -> promoteHandType (n - 1) (FullHouse h)
-                         FullHouse h -> promoteHandType (n - 1) (FiveKind h)
-                         otherwise   -> ht
-
 -- Converts the 'J' symbol into a joker for the purposes of part 2
 convertJoker :: Hand -> Hand
 convertJoker (xs, b) = (xs', b) where
@@ -114,7 +104,7 @@ solvePart1 :: [Hand] -> Int
 solvePart1 xs = sum $ map (\(r, b) -> r * b) rankedBids' where
     rankedBids' = zip rankedBids [1..]
     rankedBids  = map snd rankedHands
-    rankedHands = sortBy (comparing handType) xs 
+    rankedHands = sortBy (comparing handTypeSimple) xs 
 
 -- The solver for part #2 of the puzzle
 solvePart2 :: [Hand] -> Int
