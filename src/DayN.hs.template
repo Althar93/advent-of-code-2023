@@ -1,0 +1,34 @@
+module Day10 (day10Solver) where
+
+import Parser
+
+-- The test input file path for part one
+testInputFile :: FilePath
+testInputFile = "res/day10_test_input.txt"
+
+-- The input file path
+inputFile :: FilePath
+inputFile = "res/day10_input.txt"
+
+parseInput :: Parser [Int]
+parseInput = error "Not implemented"
+
+-- Reads the test input
+readInputs :: IO [Int]
+readInputs = do
+    contents <- readFile inputFile
+    return $ runParser parseInput contents
+
+-- The solver for part #1 of the puzzle
+solvePart1 :: [Int] -> Int
+solvePart1 hs = 0
+
+-- The solver for part #2 of the puzzle
+solvePart2 :: [Int] -> Int
+solvePart2 hs = 0
+
+-- The full solver
+day10Solver :: IO [Int]
+day10Solver = do
+    input <- readInputs
+    return [solvePart1 input, solvePart2 input]
