@@ -1,6 +1,7 @@
 module Day11 (day11Solver) where
 
 import Parser
+import Data.List (tails)
 
 -- The test input file path for part one
 testInputFile :: FilePath
@@ -86,15 +87,15 @@ drawUniverse gs = mapM_ drawRow [ym..yM] where
     (xm, xM)   = (minimum $ map fst gs, maximum $ map fst gs)
     (ym, yM)   = (minimum $ map snd gs, maximum $ map snd gs)
 
--- Generates all possible pairs for n elements
-pairs :: Int -> [(Int, Int)]
-pairs n = [(i, j) | i <- [0..n - 1], j <- [0..n - 1], i /= j]
+-- Generates all unique pairs for n elements
+uniquePairs :: Int -> [(Int, Int)]
+uniquePairs n = [(i, j) | (i:js) <- tails [0..n -1], j <- js]
 
 -- The solver for part #1 of the puzzle
 solvePart1 :: Image -> Int
-solvePart1 xss = (sum $ ds) `div` 2 where
+solvePart1 xss = sum ds where
     ds  = map (\(i, j) -> distance (gs' !! i) (gs' !! j)) ps
-    ps  = pairs (length gs')
+    ps  = uniquePairs (length gs')
     gs' = expandGalaxies er ec 1 gs
     er  = emptyRows xss
     ec  = emptyCols xss
@@ -102,9 +103,9 @@ solvePart1 xss = (sum $ ds) `div` 2 where
 
 -- The solver for part #2 of the puzzle
 solvePart2 :: Image -> Int
-solvePart2 xss = (sum $ ds) `div` 2 where
+solvePart2 xss = sum ds where
     ds  = map (\(i, j) -> distance (gs' !! i) (gs' !! j)) ps
-    ps  = pairs (length gs')
+    ps  = uniquePairs (length gs')
     gs' = expandGalaxies er ec (1000000 - 1) gs
     er  = emptyRows xss
     ec  = emptyCols xss
