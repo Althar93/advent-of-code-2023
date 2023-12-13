@@ -65,12 +65,16 @@ emptyCols xss = [x | x <- [0..height xss - 1], all (=='.') (col xss x)]
 
 -- Expands the universe based on empty rows and columns
 expandGalaxies :: [Int] -> [Int] -> Int -> [(Int, Int)] -> [(Int, Int)]
-expandGalaxies er ec f gs = map (expandGalaxy er ec f) gs where
-    expandGalaxy er ec f (x, y) = (x + f * (length (filter (<x) ec)), y + f * (length (filter (<y) er)))
+expandGalaxies er ec f gs = map (expandGalaxy er ec f) gs
+    where
+        expandGalaxy er ec f (x, y) = (x + expandX, y + expandY)
+            where
+                expandX = (f - 1) * (length (filter (<x) ec))
+                expandY = (f - 1) * (length (filter (<y) er))
 
 -- Returns the manhattan distance between two points
 distance :: (Int, Int) -> (Int, Int) -> Int
-distance (x0, y0) (x1, y1) = (abs (x0 - x1)) + (abs (y0 - y1))
+distance (x0, y0) (x1, y1) = abs (x0 - x1) + abs (y0 - y1)
 
 -- Draws the image
 drawImage :: Image -> IO ()
@@ -96,7 +100,7 @@ solvePart1 :: Image -> Int
 solvePart1 xss = sum ds where
     ds  = map (\(i, j) -> distance (gs' !! i) (gs' !! j)) ps
     ps  = uniquePairs (length gs')
-    gs' = expandGalaxies er ec 1 gs
+    gs' = expandGalaxies er ec 2 gs
     er  = emptyRows xss
     ec  = emptyCols xss
     gs  = galaxies xss 
@@ -106,7 +110,7 @@ solvePart2 :: Image -> Int
 solvePart2 xss = sum ds where
     ds  = map (\(i, j) -> distance (gs' !! i) (gs' !! j)) ps
     ps  = uniquePairs (length gs')
-    gs' = expandGalaxies er ec (1000000 - 1) gs
+    gs' = expandGalaxies er ec 1000000 gs
     er  = emptyRows xss
     ec  = emptyCols xss
     gs  = galaxies xss 
