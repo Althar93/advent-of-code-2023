@@ -101,7 +101,7 @@ mapFirstMaybe f (x:xs) = case f x of
                                        Just xs' -> Just $ (x:xs')
                           Just x' -> Just $ (x':xs)
 
--- Executes the function on the elemnt index-
+-- Executes the function on the element at the specified index
 atFirstMaybe :: (a -> Maybe a) -> Int -> [a] -> Maybe [a]
 atFirstMaybe f i []     = Nothing 
 atFirstMaybe f i (xs)   = case f (xs !! i) of
