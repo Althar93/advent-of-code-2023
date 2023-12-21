@@ -42,7 +42,9 @@ executable advent-of-code2023
                       Day13,
                       Day14,
                       Day15,
-                      Day16
+                      Day16,
+                      Day17,
+                      Day18
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
